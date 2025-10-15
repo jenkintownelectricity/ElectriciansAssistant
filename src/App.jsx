@@ -6,6 +6,9 @@ import { Input } from '@/components/ui/input.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.jsx'
 import { ELECTRICAL_PROBLEMS, PROBLEM_CATEGORIES, SEVERITY_LEVELS } from '@/data/electricalProblems.js'
+import { getCurrentVersion, hasFeature } from './config/versions'
+import DevModeSubmission from './components/DevModeSubmission'
+import UpgradePrompt from './components/UpgradePrompt'
 import './App.css'
 
 function App() {
@@ -18,6 +21,12 @@ function App() {
   const [error, setError] = useState(null)
   const fileInputRef = useRef(null)
   const cameraInputRef = useRef(null)
+
+  // Phase 1: Residential Wizard version management
+  const currentVersion = getCurrentVersion()
+  const showDevMode = hasFeature('dev_mode')
+  const [showUpgradePrompt, setShowUpgradePrompt] = useState(false)
+  const [upgradeContext, setUpgradeContext] = useState('')
 
   // Get problems by commonality
   const topProblems = ELECTRICAL_PROBLEMS.filter(p => p.commonality === 'most-common')
@@ -137,7 +146,7 @@ function App() {
       {/* Header */}
       <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
               <div className="bg-gradient-to-br from-yellow-400 to-orange-500 p-2 rounded-lg shadow-md">
                 <Zap className="h-6 w-6 text-white" />
@@ -147,12 +156,22 @@ function App() {
                 <p className="text-sm text-slate-600 dark:text-slate-400">NEC 2023 Code Reference & Troubleshooting</p>
               </div>
             </div>
-            {currentView !== 'home' && (
-              <Button variant="outline" onClick={() => setCurrentView('home')}>
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Home
-              </Button>
-            )}
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Badge variant="secondary" className="text-sm font-medium">
+                  {currentVersion.name}
+                </Badge>
+                <span className="text-sm text-gray-600 dark:text-gray-400">
+                  {currentVersion.articles.length} Articles
+                </span>
+              </div>
+              {currentView !== 'home' && (
+                <Button variant="outline" onClick={() => setCurrentView('home')}>
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back to Home
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </header>
@@ -698,7 +717,38 @@ function App() {
             )}
           </div>
         )}
+
+        {/* Phase 1: Dev Mode Submission Form */}
+        {showDevMode && (
+          <div className="mt-12 mb-8">
+            <DevModeSubmission
+              onSubmitSuccess={() => {
+                alert('Code submitted successfully! Thank you for contributing to the NEC database.')
+              }}
+            />
+          </div>
+        )}
       </main>
+
+      {/* Phase 1: Upgrade Prompt Modal */}
+      {showUpgradePrompt && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="relative max-w-2xl w-full">
+            <UpgradePrompt
+              currentTier={currentVersion.id}
+              triggeredBy={upgradeContext}
+            />
+            <button
+              onClick={() => setShowUpgradePrompt(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="mt-16 py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">

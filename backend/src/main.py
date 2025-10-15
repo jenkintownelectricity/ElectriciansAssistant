@@ -106,10 +106,14 @@ def get_nec_codes():
             try:
                 response = requests.get(sheet_url, timeout=5)
                 if response.status_code == 200:
+                    # Parse standard CSV from Google Sheets
                     csv_data = csv.DictReader(StringIO(response.text))
 
                     article_codes = []
                     for row in csv_data:
+                        # Trim whitespace from keys and values
+                        row = {k.strip(): v.strip() if isinstance(v, str) else v for k, v in row.items()}
+
                         code_entry = {
                             "code": row.get("Code", ""),
                             "article": row.get("Article", str(article_num)),
@@ -122,7 +126,9 @@ def get_nec_codes():
                             "commonViolations": row.get("Common_Violations", ""),
                             "photoTips": row.get("Photo_Tips", "")
                         }
-                        article_codes.append(code_entry)
+                        # Only add if code has actual data
+                        if code_entry["code"]:
+                            article_codes.append(code_entry)
 
                     if article_codes:  # Only add if we got valid data
                         all_codes.extend(article_codes)
@@ -130,7 +136,9 @@ def get_nec_codes():
 
             except Exception as e:
                 # Skip articles that don't exist yet or have errors
+                import traceback
                 print(f"Could not load Article {article_num}: {str(e)}")
+                print(traceback.format_exc())
                 continue
 
         return jsonify({
