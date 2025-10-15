@@ -9,6 +9,9 @@ import { ELECTRICAL_PROBLEMS, PROBLEM_CATEGORIES, SEVERITY_LEVELS } from '@/data
 import { getCurrentVersion, hasFeature } from './config/versions'
 import DevModeSubmission from './components/DevModeSubmission'
 import UpgradePrompt from './components/UpgradePrompt'
+import ScheduleSidebar from './components/ScheduleSidebar'
+import EventDetailModal from './components/EventDetailModal'
+import { useGoogleCalendar } from './hooks/useGoogleCalendar'
 import './App.css'
 
 function App() {
@@ -27,6 +30,25 @@ function App() {
   const showDevMode = hasFeature('dev_mode')
   const [showUpgradePrompt, setShowUpgradePrompt] = useState(false)
   const [upgradeContext, setUpgradeContext] = useState('')
+
+  // Google Calendar integration
+  const {
+    isSignedIn,
+    isLoading: calendarLoading,
+    events,
+    error: calendarError,
+    signIn,
+    refreshEvents,
+    getStats
+  } = useGoogleCalendar()
+
+  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [showEventModal, setShowEventModal] = useState(false)
+
+  const handleEventClick = (event) => {
+    setSelectedEvent(event)
+    setShowEventModal(true)
+  }
 
   // Get problems by commonality
   const topProblems = ELECTRICAL_PROBLEMS.filter(p => p.commonality === 'most-common')
@@ -142,9 +164,9 @@ function App() {
     : ELECTRICAL_PROBLEMS
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 flex flex-col">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm flex-shrink-0">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div className="flex items-center gap-3">
@@ -176,7 +198,9 @@ function App() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-6xl">
+      {/* Main Content Area with Sidebar */}
+      <div className="flex-1 flex overflow-hidden">
+        <main className="flex-1 container mx-auto px-4 py-8 max-w-6xl overflow-y-auto">
         {/* HOME VIEW - Start Here */}
         {currentView === 'home' && (
           <div className="space-y-6">
@@ -730,6 +754,18 @@ function App() {
         )}
       </main>
 
+        {/* Schedule Sidebar */}
+        <ScheduleSidebar
+          events={events}
+          isLoading={calendarLoading}
+          isSignedIn={isSignedIn}
+          onEventClick={handleEventClick}
+          onRefresh={refreshEvents}
+          onSignIn={signIn}
+          stats={getStats()}
+        />
+      </div>
+
       {/* Phase 1: Upgrade Prompt Modal */}
       {showUpgradePrompt && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
@@ -751,12 +787,19 @@ function App() {
       )}
 
       {/* Footer */}
-      <footer className="mt-16 py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+      <footer className="flex-shrink-0 py-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
         <div className="container mx-auto px-4 text-center text-sm text-slate-600 dark:text-slate-400">
           <p>⚠️ This tool provides guidance for educational purposes. Always consult a licensed electrician for professional electrical work.</p>
           <p className="mt-2">NEC 2023 Edition Code References Included</p>
         </div>
       </footer>
+
+      {/* Event Detail Modal */}
+      <EventDetailModal
+        event={selectedEvent}
+        isOpen={showEventModal}
+        onClose={() => setShowEventModal(false)}
+      />
     </div>
   )
 }
