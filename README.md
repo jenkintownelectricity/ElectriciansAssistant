@@ -10,6 +10,25 @@ An AI-powered electrical safety inspection and code reference tool designed to h
 ![React](https://img.shields.io/badge/React-19.1-blue)
 ![Python](https://img.shields.io/badge/Python-3.14-green)
 ![Claude](https://img.shields.io/badge/Claude-3.5%20Sonnet-purple)
+![Phase](https://img.shields.io/badge/Phase%201-Residential%20Wizard-yellow)
+
+## 🏠 Phase 1: Residential Wizard
+
+**Now Available**: Residential Wizard tier - $29/month or $199/year
+
+This repository contains a **three-tier product system** designed to scale from residential to enterprise electrical work:
+
+### 🎯 Product Tiers
+
+| Tier | Target Market | Articles | Price | Status |
+|------|--------------|----------|-------|--------|
+| **Residential Wizard** | Residential electricians, small contractors | 11 articles (80% coverage) | $29/mo or $199/yr | ✅ Phase 1 - In Development |
+| **Commercial Wizard** | Commercial electricians, contractors | 34 articles | $79/mo or $599/yr | 📋 Phase 2 - Planned |
+| **Enterprise Wizard** | Large contractors, teams | All NEC 2023 | Custom pricing | 🔮 Phase 3 - Planned |
+
+**Phase 1 Coverage**: Articles 110, 210, 240, 250, 310, 314, 334, 404, 406, 408, 410
+
+See [`PHASE1_IMPLEMENTATION.md`](PHASE1_IMPLEMENTATION.md) for complete technical details.
 
 ## 🌟 Features
 
