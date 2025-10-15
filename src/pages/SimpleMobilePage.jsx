@@ -1,8 +1,9 @@
 import { useState, useRef } from 'react'
-import { Camera, Search, Menu, X, ChevronDown, AlertTriangle, CheckCircle } from 'lucide-react'
+import { Camera, Search, Menu, X, ChevronDown, AlertTriangle, CheckCircle, Mic } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { motion, AnimatePresence } from 'framer-motion'
+import VoiceDocumentation from '@/components/VoiceDocumentation'
 
 // Common electrical problems - simplified
 const COMMON_PROBLEMS = [
@@ -16,7 +17,7 @@ const COMMON_PROBLEMS = [
 
 const SimpleMobilePage = () => {
   const [showMenu, setShowMenu] = useState(false)
-  const [currentView, setCurrentView] = useState('home') // home, camera, problem, result
+  const [currentView, setCurrentView] = useState('home') // home, camera, problem, result, voice
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedProblem, setSelectedProblem] = useState(null)
   const [analyzing, setAnalyzing] = useState(false)
@@ -68,6 +69,16 @@ const SimpleMobilePage = () => {
             className="bg-blue-50 border-b border-blue-100 overflow-hidden"
           >
             <div className="p-4 space-y-2">
+              <button
+                onClick={() => {
+                  setCurrentView('voice')
+                  setShowMenu(false)
+                }}
+                className="w-full text-left px-4 py-3 bg-white rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium flex items-center gap-2"
+              >
+                <Mic className="h-4 w-4" />
+                Voice Documentation
+              </button>
               <button className="w-full text-left px-4 py-3 bg-white rounded-lg hover:bg-blue-50 transition-colors text-sm font-medium">
                 📚 NEC Code Reference
               </button>
@@ -284,6 +295,19 @@ const SimpleMobilePage = () => {
               >
                 Analyze Another Photo
               </Button>
+            </motion.div>
+          )}
+
+          {/* VOICE DOCUMENTATION VIEW */}
+          {currentView === 'voice' && (
+            <motion.div
+              key="voice"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="h-full"
+            >
+              <VoiceDocumentation />
             </motion.div>
           )}
         </AnimatePresence>
