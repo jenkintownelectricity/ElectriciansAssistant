@@ -2,6 +2,10 @@
 
 An AI-powered electrical safety inspection and code reference tool designed to help electricians identify problems, troubleshoot issues, and verify NEC 2023 compliance.
 
+> **Created by [Armand Lefebvre](https://jenkintownelectricity.com)**
+> Founder & Owner of Jenkintown Electricity
+> 🚀 *Exciting news: More innovative tools coming soon!*
+
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![React](https://img.shields.io/badge/React-19.1-blue)
 ![Python](https://img.shields.io/badge/Python-3.14-green)
@@ -232,8 +236,9 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 📞 Support
 
 For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Contact: [Your contact information]
+- Contact: [BuildingSystemsAI_Administrator]
+- Email: [support@buildingsystems.ai]
+- Developed by: https://jenkintownelectricity.com
 
 ## ⚠️ Disclaimer
 
