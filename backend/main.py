@@ -16,6 +16,10 @@ load_dotenv(os.path.join(os.path.dirname(__file__), '../.env'))
 app = Flask(__name__, static_folder="../../dist", static_url_path="/")
 CORS(app)
 
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({"status": "ok", "message": "Electrician Assistant API - Backend is running"})
+
 # Configuration
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
 GOOGLE_SHEETS_BASE_URL = os.getenv("GOOGLE_SHEETS_BASE_URL", "")
@@ -456,15 +460,15 @@ def health_check():
         "devMode": ENABLE_DEV_MODE
     })
 
-@app.route("/")
-def serve_index():
-    """Serve frontend index.html"""
-    return send_from_directory(app.static_folder, "index.html")
+#@app.route("/")
+#def serve_index():
+    #"""Serve frontend index.html"""
+    #return send_from_directory(app.static_folder, "index.html")
 
-@app.errorhandler(404)
-def not_found(e):
-    """Handle 404 errors by serving index.html (for SPA routing)"""
-    return app.send_static_file("index.html")
+#@app.errorhandler(404)
+#def not_found(e):
+    #"""Handle 404 errors by serving index.html (for SPA routing)"""
+    #return app.send_static_file("index.html")
 
 if __name__ == "__main__":
     print(f"\n{'='*60}")
