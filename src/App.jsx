@@ -86,7 +86,7 @@ function App() {
           reader.readAsDataURL(image.file)
         })
 
-        const response = await fetch('/api/analyze', {
+        const response = await fetch('https://electrician-assist-backend-production.up.railway.app/api/analyze', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
