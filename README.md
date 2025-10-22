@@ -1,5 +1,27 @@
 # Electrician's Assistant
 
+🎉 **FULLY DEPLOYED AND LIVE!**
+- **Frontend:** https://keen-endurance-production.up.railway.app
+- **Backend API:** https://electrician-assist-backend-production.up.railway.app
+
+---
+
+Professional Electrical Safety & Code Reference Tool with AI-powered analysis
+
+## 🚀 Live Deployment
+
+The application is fully deployed on Railway with both frontend and backend services running in production.
+
+**Features:**
+- ✅ 30 Common Electrical Problems with detailed troubleshooting
+- ✅ 170+ NEC 2023 Codes across 11 articles
+- ✅ Context-Aware AI Photo Analysis (powered by Claude AI)
+- ✅ Searchable problem and code database
+- ✅ Professional UI with dark mode support
+
+---
+# Electrician's Assistant
+
 Professional Electrical Safety & Code Reference Tool with AI-powered analysis
 
 ## Features
@@ -239,3 +261,12 @@ Proprietary - © 2025 Jenkintown Electricity
 ## Compliance
 
 ⚠️ **Important Notice:** This tool provides guidance for educational purposes. Always consult a licensed electrician for professional electrical work. All code references are based on NEC 2023 Edition.
+
+## 🌐 Deployment URLs
+
+- **Production Frontend:** https://keen-endurance-production.up.railway.app
+- **Production Backend:** https://electrician-assist-backend-production.up.railway.app
+
+**Deployed on:** Railway
+**Last Updated:** October 22, 2025
+**Status:** ✅ Active and Running
