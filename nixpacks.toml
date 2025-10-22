@@ -1,0 +1,16 @@
+[phases.setup]
+nixPkgs = ["nodejs_18"]
+aptPkgs = []
+
+[phases.install]
+cmds = [
+  "npm install --legacy-peer-deps"
+]
+
+[phases.build]
+cmds = [
+  "npm run build"
+]
+
+[start]
+cmd = "npx serve -s dist -l $PORT"
