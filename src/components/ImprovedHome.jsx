@@ -37,17 +37,19 @@ export default function ImprovedHome({
           </CardContent>
         </Card>
 
-        <Card className="shadow-lg hover:shadow-xl transition-all border-2 border-green-200 hover:border-green-400 cursor-pointer" onClick={startPhotoAnalysis}>
+        <Card className="shadow-lg hover:shadow-xl transition-all border-2 border-green-200 hover:border-green-400 cursor-pointer" onClick={() => {
+  setCurrentView('index');
+}}>
           <CardContent className="p-6 text-center">
             <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Camera className="h-8 w-8 text-green-600" />
             </div>
             <h3 className="text-xl font-bold mb-2">AI Photo Analysis</h3>
-            <p className="text-slate-600">Upload photos for instant AI-powered safety inspection and code compliance</p>
+            <p className="text-slate-600">Select a problem, then upload photos for context-aware AI analysis</p>
           </CardContent>
         </Card>
 
-        <Card className="shadow-lg hover:shadow-xl transition-all border-2 border-yellow-200 hover:border-yellow-400 cursor-pointer" onClick={() => setCurrentView('index')}>
+        <Card className="shadow-lg hover:shadow-xl transition-all border-2 border-yellow-200 hover:border-yellow-400 cursor-pointer" onClick={() => setCurrentView('nec-database')}>
           <CardContent className="p-6 text-center">
             <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <Code className="h-8 w-8 text-yellow-600" />

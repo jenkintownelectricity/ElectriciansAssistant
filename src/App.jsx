@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.jsx'
 import { ELECTRICAL_PROBLEMS, PROBLEM_CATEGORIES, SEVERITY_LEVELS } from '@/data/electricalProblems.js'
+import { NEC_CODES } from '@/data/necCodes.js'
 import './App.css'
 import ImprovedHome from '@/components/ImprovedHome.jsx'
 
@@ -280,6 +281,70 @@ function App() {
                 </AlertDescription>
               </Alert>
             )}
+          </div>
+        )}
+        {/* NEC CODES VIEW */}
+        {currentView === 'nec-database' && (
+          <div className="space-y-6">
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-3xl">NEC 2023 Code Database</CardTitle>
+                <CardDescription>Browse {NEC_CODES.length} essential electrical codes organized by article</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="relative mb-6">
+                  <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    placeholder="Search NEC codes by number, title, or keyword..."
+                    className="pl-10 text-lg py-6"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* NEC Codes Grid */}
+            <div className="grid gap-4">
+              {(searchQuery
+                ? NEC_CODES.filter(code =>
+                    code.code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    code.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    code.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    code.keywords.some(k => k.toLowerCase().includes(searchQuery.toLowerCase()))
+                  )
+                : NEC_CODES
+              ).map((code) => (
+                <Card
+                  key={code.code}
+                  className="shadow-md hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-3">
+                        <Badge variant="outline" className="text-sm font-mono bg-blue-50 text-blue-700 border-blue-200">
+                          {code.code}
+                        </Badge>
+                        <Badge variant="secondary" className="text-xs">
+                          Article {code.article}
+                        </Badge>
+                      </div>
+                    </div>
+                    <h3 className="text-lg font-semibold mb-2">{code.title}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 mb-3">{code.description}</p>
+                    {code.keywords && code.keywords.length > 0 && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {code.keywords.slice(0, 5).map((keyword, idx) => (
+                          <Badge key={idx} variant="outline" className="text-xs">
+                            {keyword}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 
