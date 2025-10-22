@@ -1,276 +1,241 @@
-# ⚡ Electrician's Assistant
+# Electrician's Assistant
 
-An AI-powered electrical safety inspection and code reference tool designed to help electricians identify problems, troubleshoot issues, and verify NEC 2023 compliance.
+Professional Electrical Safety & Code Reference Tool with AI-powered analysis
 
-> **Created by [Armand Lefebvre](https://jenkintownelectricity.com)**
-> Founder & Owner of Jenkintown Electricity
-> 🚀 *Exciting news: More innovative tools coming soon!*
+## Features
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-19.1-blue)
-![Python](https://img.shields.io/badge/Python-3.14-green)
-![Claude](https://img.shields.io/badge/Claude-3.5%20Sonnet-purple)
-![Phase](https://img.shields.io/badge/Phase%201-Residential%20Wizard-yellow)
+### 🛡️ Safety Database
+- **30 Common Electrical Problems** with detailed troubleshooting
+- Organized by severity: Critical, High, Medium, Low
+- Step-by-step repair guidance
+- NEC 2023 code references for each problem
 
-## 🏠 Phase 1: Residential Wizard
-
-**Now Available**: Residential Wizard tier - $29/month or $199/year
-
-This repository contains a **three-tier product system** designed to scale from residential to enterprise electrical work:
-
-### 🎯 Product Tiers
-
-| Tier | Target Market | Articles | Price | Status |
-|------|--------------|----------|-------|--------|
-| **Residential Wizard** | Residential electricians, small contractors | 11 articles (80% coverage) | $29/mo or $199/yr | ✅ Phase 1 - In Development |
-| **Commercial Wizard** | Commercial electricians, contractors | 34 articles | $79/mo or $599/yr | 📋 Phase 2 - Planned |
-| **Enterprise Wizard** | Large contractors, teams | All NEC 2023 | Custom pricing | 🔮 Phase 3 - Planned |
-
-**Phase 1 Coverage**: Articles 110, 210, 240, 250, 310, 314, 334, 404, 406, 408, 410
-
-See [`PHASE1_IMPLEMENTATION.md`](PHASE1_IMPLEMENTATION.md) for complete technical details.
-
-## 🌟 Features
-
-### 🔍 Smart Problem Diagnosis
-- **Top 3 Most Common Problems**: Quick access to the most frequent electrical issues
-- **Next 10 Common Problems**: Extended list of typical electrical problems
-- **Full Problem Index**: Comprehensive database of electrical issues
-- **Search Functionality**: Find specific problems quickly
-
-### 📸 AI-Powered Photo Analysis
-- Upload photos of electrical installations
-- AI analysis using Claude 3.5 Sonnet
-- Detailed safety inspection reports
-- NEC 2023 code violation detection
-- Critical issue identification
+### 📸 AI Photo Analysis
+- Upload electrical panel/outlet photos
+- AI-powered safety inspection
+- Automatic code compliance checking
+- Identifies hazards and violations
 
 ### 📚 NEC 2023 Code Database
-- Pre-loaded National Electrical Code 2023 references
-- 13+ common electrical problems with detailed NEC citations
-- Troubleshooting steps for each problem
-- Photo instructions for proper documentation
+- **170+ Essential NEC Codes** across 11 articles
+- Articles covered:
+  - Article 110 - General Requirements (17 codes)
+  - Article 210 - Branch Circuits (23 codes)
+  - Article 240 - Overcurrent Protection (13 codes)
+  - Article 250 - Grounding & Bonding (19 codes)
+  - Article 310 - Conductors (13 codes)
+  - Article 314 - Boxes & Enclosures (12 codes)
+  - Article 334 - NM Cable (10 codes)
+  - Article 404 - Switches (11 codes)
+  - Article 406 - Receptacles (15 codes)
+  - Article 408 - Panelboards (12 codes)
+  - Article 410 - Lighting (12 codes)
+- Quick search functionality
 - Related code cross-references
 
-### 🎯 Intelligent Workflow
-1. **Start with common problems** - Most issues fall into known categories
-2. **Follow troubleshooting steps** - Guided diagnosis process
-3. **Take photos** - Specific photo instructions for each problem
-4. **AI verification** - Upload photos for AI-powered safety analysis
-5. **Get detailed reports** - Comprehensive safety ratings and recommendations
+## Recent Updates (v1.5 - Residential Wizard Expansion)
 
-## 🚀 Quick Start
+### Content Additions
+- ✅ Expanded from 13 to **30 electrical problems**
+- ✅ Added 109 new NEC codes (60 → 170+)
+- ✅ Complete coverage of residential electrical issues
+- ✅ Enhanced code references with detailed descriptions
 
-### Prerequisites
+### New Problems Added
+- Overloaded Electrical Panel
+- Outdated Electrical Panel
+- Missing GFCI Protection
+- Improper Wire Splicing
+- Loose Wire Connections
+- Missing Junction Box Covers
+- Insufficient Lighting Outlets
+- Reversed Polarity
+- Shared Neutral Circuits
+- Missing Arc-Fault Protection
+- Electrical Box Overfill
+- Improper Grounding
+- Aluminum Wiring Issues
+- Incorrect Wire Gauge
+- Backstabbed Outlets
+- Federal Pacific Panels
+- Doorbell Not Working
 
-- **Node.js** (v18 or higher)
-- **Python** (v3.14 or compatible)
-- **Anthropic API Key** (for Claude AI)
+## AI Photo Analysis - Context-Aware Workflow
 
-### Installation
+The AI Photo Analysis feature uses **context-aware analysis** to provide more accurate safety assessments based on the specific electrical problem you're experiencing.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/jenkintownelectricity/ElectriciansAssistant.git
-   cd ElectriciansAssistant
-   ```
+### How It Works
 
-2. **Install frontend dependencies**
-   ```bash
-   npm install --legacy-peer-deps
-   ```
-
-3. **Install backend dependencies**
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   ```
-
-4. **Set up environment variables**
-
-   Create a `.env` file in the `backend/` directory:
-   ```env
-   ANTHROPIC_API_KEY=your_anthropic_api_key_here
-   ```
-
-   To get an Anthropic API key:
-   - Visit https://console.anthropic.com/
-   - Sign up or log in
-   - Navigate to API Keys
-   - Create a new key
-
-### Running the Application
-
-1. **Start the backend server** (from project root):
-   ```bash
-   cd backend
-   python src/main.py
-   ```
-   Backend will run on `http://localhost:5000`
-
-2. **Start the frontend** (from project root in a new terminal):
-   ```bash
-   npm run dev
-   ```
-   Frontend will run on `http://localhost:5173`
-
-3. **Open your browser** and navigate to `http://localhost:5173`
-
-## 🏗️ Project Structure
-
+1. **Select a Problem First**
+   - Navigate to the Safety Database (30 problems available)
+   - Choose the specific issue you're experiencing (e.g., "Circuit Breaker Keeps Tripping")
+   
+2. **Upload Photos**
+   - The app provides specific photo instructions for your selected problem
+   - Example: For circuit breakers, you'll be asked to photograph the panel interior, breaker labels, etc.
+   
+3. **Context-Aware AI Analysis**
+   - The AI receives your photos PLUS the problem context
+   - Backend API call includes:
+```javascript
+     {
+       image: <base64_image_data>,
+       problem: "Circuit Breaker Keeps Tripping",
+       context: "Circuit breaker trips repeatedly when certain appliances are used"
+     }
 ```
-electrician-assistant/
-├── backend/
-│   ├── src/
-│   │   └── main.py          # Flask API server
-│   ├── .env                 # Environment variables (not in git)
-│   └── requirements.txt     # Python dependencies
-├── src/
-│   ├── components/ui/       # shadcn/ui components
-│   ├── data/
-│   │   ├── electricalProblems.js  # Problem database
-│   │   └── necCodes.js           # NEC 2023 code database
-│   ├── App.jsx             # Main application component
-│   └── main.jsx            # Entry point
-├── public/                  # Static assets
-├── .gitignore
-├── package.json
-├── vite.config.js
-└── README.md
+   - Claude AI analyzes photos specifically looking for issues related to your problem
+   - Results are tailored to the selected electrical issue
+
+4. **Get Detailed Results**
+   - Issues detected specific to your problem
+   - NEC code violations identified
+   - Step-by-step remediation recommendations
+   - Safety warnings prioritized by severity
+
+### Why Context Matters
+
+**Without Context:** AI might miss problem-specific issues or provide generic analysis
+
+**With Context:** 
+- For "Hot Outlet" → AI looks specifically for overload signs, loose connections, arcing
+- For "GFCI Tripping" → AI checks for moisture, ground faults, worn insulation
+- For "Flickering Lights" → AI examines connections, dimmer compatibility, voltage issues
+
+### Technical Flow
+```
+User Journey:
+Home Page → Safety Database → Select Problem → Photo Analysis View
+                                    ↓
+                          Problem Context Loaded
+                                    ↓
+                            Upload Photos (1-5)
+                                    ↓
+                         Frontend (React/Vite)
+                                    ↓
+            POST /api/analyze with {image, problem, context}
+                                    ↓
+                      Backend (Flask/Python)
+                                    ↓
+                        Claude AI API (Anthropic)
+                                    ↓
+            Context-Aware Analysis with NEC 2023 References
+                                    ↓
+                      Detailed Results Display
 ```
 
-## 🛠️ Tech Stack
+### API Endpoint
 
-### Frontend
-- **React 19.1** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS 4.1** - Styling
-- **shadcn/ui** - Component library (Radix UI primitives)
-- **Framer Motion** - Animations
-- **Lucide React** - Icons
+**POST** `/api/analyze`
 
-### Backend
-- **Flask** - Python web framework
-- **Flask-CORS** - Cross-origin resource sharing
-- **Anthropic Claude API** - AI-powered image analysis
-- **python-dotenv** - Environment variable management
+**Request Body:**
+```json
+{
+  "image": "data:image/jpeg;base64,...",
+  "problem": "Circuit Breaker Keeps Tripping",
+  "context": "Circuit breaker trips repeatedly when certain appliances are used or randomly"
+}
+```
 
-## 📖 Usage Guide
+**Response:**
+```json
+{
+  "analysis": {
+    "summary": "Analysis summary",
+    "issues": [
+      {
+        "type": "critical",
+        "title": "Overloaded Circuit",
+        "description": "Circuit shows signs of excessive load",
+        "location": "Panel breaker #5",
+        "nec_reference": "210.20(A)"
+      }
+    ],
+    "recommendations": [
+      "Replace 15A breaker with 20A",
+      "Verify wire gauge supports 20A load",
+      "Add dedicated circuit for high-draw appliance"
+    ]
+  }
+}
+```
 
-### Analyzing an Electrical Problem
+**This context-aware approach provides significantly more accurate and actionable results than generic photo analysis.**
+## Tech Stack
 
-1. **Choose Your Entry Point**:
-   - Start with "Top 3 Most Common Problems" if you're unsure
-   - Use "Next 10 Common Problems" for extended list
-   - Browse "Full Problem Index" for complete catalog
-   - Use search to find specific issues
+**Frontend:**
+- React + Vite
+- TailwindCSS
+- Shadcn/UI Components
+- Lucide Icons
 
-2. **Select a Problem**:
-   - Read the problem description
-   - Review possible causes
-   - Check NEC code references
-   - Follow troubleshooting steps
+**Backend:**
+- Python FastAPI
+- Claude AI (Anthropic)
+- NEC 2023 Database
 
-3. **Take Photos**:
-   - Follow the photo instructions provided
-   - Capture multiple angles if needed
-   - Ensure clear, well-lit images
+## Installation
+```bash
+# Clone the repository
+git clone https://github.com/jenkintownelectricity/ElectriciansAssistant.git
 
-4. **Upload for AI Analysis**:
-   - Click "Upload Photos"
-   - Select one or more images
-   - Click "Analyze with AI"
-   - Review the detailed safety report
+# Install frontend dependencies
+npm install
 
-### Understanding the Analysis Report
+# Install backend dependencies
+cd backend
+pip install -r requirements.txt
 
-The AI provides:
-- **Issues Found**: Critical, warning, or informational items
-- **Issue Description**: Detailed explanation of each problem
-- **Location**: Where in the image the issue was found
-- **NEC Reference**: Relevant code sections
-- **Recommendations**: Specific action items
-- **Compliance Status**: Overall code compliance rating
-- **Safety Rating**: Risk level assessment
+# Set up environment variables
+cp .env.example .env
+# Add your Anthropic API key to .env
 
-## 🔐 Security Notes
+# Run the application
+# Terminal 1 - Backend
+cd backend
+python main.py
 
-- Never commit your `.env` file or API keys to git
-- The `.gitignore` file is configured to exclude sensitive files
-- API keys are loaded securely from environment variables
-- All image analysis is done server-side
+# Terminal 2 - Frontend
+npm run dev
+```
 
-## 🤝 Contributing
+## Usage
 
-Contributions are welcome! Here's how you can help:
+1. **Browse Problems**: Click "Safety Database" to view all 30 common electrical issues
+2. **AI Analysis**: Click "AI Photo Analysis" to upload and analyze electrical photos
+3. **Search Codes**: Click "NEC 2023 Codes" to browse the code database
+4. **Search**: Use the search bar to quickly find specific problems or codes
 
-1. **Add more electrical problems** to the database
-2. **Expand NEC code references** with more articles
-3. **Improve AI prompts** for better analysis accuracy
-4. **Add new features** like report export, saving analysis history
-5. **Fix bugs** and improve performance
+## Project Status
 
-### Google Sheets Integration (Coming Soon)
+**Current Version:** v1.5 (Residential Wizard - 80% Complete)
 
-We're working on Google Sheets integration to make it easier to manage the NEC code database. See `GOOGLE_SHEETS_SETUP.md` for details.
+**Completed:**
+- ✅ Core application structure
+- ✅ 30 electrical problems with full details
+- ✅ 170+ NEC 2023 codes across 11 articles
+- ✅ AI photo analysis integration
+- ✅ Responsive UI with improved home page
 
-## 📋 Common Electrical Problems Covered
+**In Progress:**
+- 🔄 Dedicated NEC codes browser view
+- 🔄 Advanced search and filtering
+- 🔄 Mobile optimization
 
-1. Circuit Breaker Keeps Tripping
-2. GFCI Outlet Keeps Tripping
-3. Dead Outlet - No Power
-4. Flickering Lights
-5. Buzzing or Humming from Outlet/Switch
-6. Hot Outlet or Switch Plate
-7. Burning Smell from Outlet/Panel
-8. Sparking Outlet
-9. Two-Prong Outlets (Ungrounded)
-10. Light Switch Not Working
-11. Reversed Polarity
-12. AFCI Breaker Nuisance Tripping
-13. Aluminum Wiring Issues
+**Planned:**
+- 📋 Commercial tier expansion
+- 📋 Inspection report generation
+- 📋 PDF export functionality
+- 📋 Offline mode support
 
-## 🎯 Roadmap
+## Contributing
 
-- [ ] Google Sheets integration for NEC code database
-- [ ] Export analysis reports to PDF
-- [ ] Save analysis history
-- [ ] Multi-language support
-- [ ] Mobile app version
-- [ ] Offline mode for field use
-- [ ] Voice input for hands-free operation
-- [ ] Integration with inspection checklists
+This is a private project. For access or inquiries, contact Jenkintown Electricity.
 
-## 📄 License
+## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Proprietary - © 2025 Jenkintown Electricity
 
-## 🙏 Acknowledgments
+## Compliance
 
-- **National Fire Protection Association (NFPA)** - For the NEC standards
-- **Anthropic** - For Claude AI technology
-- **shadcn/ui** - For the beautiful component library
-- **The electrician community** - For feedback and problem scenarios
-
-## 📞 Support
-
-For issues, questions, or suggestions:
-- Contact: [BuildingSystemsAI_Administrator]
-- Email: [support@buildingsystems.ai]
-- Developed by: https://jenkintownelectricity.com
-
-## ⚠️ Disclaimer
-
-This tool is designed to assist licensed electricians and electrical inspectors. It is not a substitute for:
-- Professional electrical training and certification
-- Proper safety procedures and PPE
-- Local electrical codes and regulations
-- Professional judgment and experience
-
-Always follow local electrical codes, safety procedures, and manufacturer instructions. When in doubt, consult with a licensed master electrician or electrical inspector.
-
----
-
-**Built with ⚡ by electricians, for electricians**
-
-🤖 *AI-powered with Claude Code*
+⚠️ **Important Notice:** This tool provides guidance for educational purposes. Always consult a licensed electrician for professional electrical work. All code references are based on NEC 2023 Edition.
