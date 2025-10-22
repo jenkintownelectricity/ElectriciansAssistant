@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge.jsx'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert.jsx'
 import { ELECTRICAL_PROBLEMS, PROBLEM_CATEGORIES, SEVERITY_LEVELS } from '@/data/electricalProblems.js'
 import './App.css'
-import ImprovedHome from '@/components/ImprovedHome.jsx'
 
 function App() {
   const [currentView, setCurrentView] = useState('home') // home, top3, next10, index, problem-detail, photo-analysis
@@ -149,12 +148,7 @@ function App() {
               </div>
             </div>
             {currentView !== 'home' && (
-              <Button variant="outline" onClick={() => {
-  setCurrentView('home');
-  setSelectedProblem(null);
-  setSelectedImages([]);
-  setAnalysisResults([]);
-}}>
+              <Button variant="outline" onClick={() => setCurrentView('home')}>
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Home
               </Button>
@@ -165,17 +159,89 @@ function App() {
 
       <main className="container mx-auto px-4 py-8 max-w-6xl">
         {/* HOME VIEW - Start Here */}
-        {/* HOME VIEW - Start Here */}
         {currentView === 'home' && (
-          <ImprovedHome
-            topProblems={topProblems}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            setCurrentView={setCurrentView}
-            handleProblemSelect={handleProblemSelect}
-            getSeverityColor={getSeverityColor}
-            startPhotoAnalysis={() => setCurrentView('photo-analysis')}
-          />
+          <div className="space-y-6">
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-2xl">What electrical problem are you experiencing?</CardTitle>
+                <CardDescription>Select from common issues below, or search for your specific problem</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="relative mb-6">
+                  <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                  <Input
+                    placeholder="Search for electrical problems..."
+                    className="pl-10 text-lg py-6"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onFocus={() => setCurrentView('index')}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Top 3 Most Common Problems */}
+            <div>
+              <h2 className="text-xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-orange-500" />
+                Top 3 Most Common Problems
+              </h2>
+              <div className="grid gap-4">
+                {topProblems.map((problem) => (
+                  <Card
+                    key={problem.id}
+                    className="shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+                    onClick={() => handleProblemSelect(problem)}
+                  >
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="text-lg font-semibold">{problem.title}</h3>
+                            <Badge className={getSeverityColor(problem.severity)}>
+                              {problem.severity.toUpperCase()}
+                            </Badge>
+                          </div>
+                          <p className="text-slate-600 dark:text-slate-400">{problem.description}</p>
+                        </div>
+                        <ChevronRight className="h-6 w-6 text-slate-400 flex-shrink-0 ml-4" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="grid md:grid-cols-2 gap-4">
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-auto py-6"
+                onClick={() => setCurrentView('next10')}
+              >
+                <div className="text-left w-full">
+                  <div className="font-semibold text-lg mb-1">Can't find your problem?</div>
+                  <div className="text-sm text-slate-600">View next 10 common issues</div>
+                </div>
+                <ChevronRight className="h-5 w-5 ml-auto flex-shrink-0" />
+              </Button>
+
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-auto py-6"
+                onClick={handleSearchProblems}
+              >
+                <Book className="h-5 w-5 mr-3 flex-shrink-0" />
+                <div className="text-left w-full">
+                  <div className="font-semibold text-lg mb-1">Browse Full Index</div>
+                  <div className="text-sm text-slate-600">All electrical problems & codes</div>
+                </div>
+                <ChevronRight className="h-5 w-5 ml-auto flex-shrink-0" />
+              </Button>
+            </div>
+          </div>
         )}
 
         {/* NEXT 10 VIEW */}
