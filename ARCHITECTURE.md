@@ -10,23 +10,23 @@ Electrician's Assistant is an AI-powered electrical safety inspection and NEC 20
 ┌─────────────────────────────────────────────────────────────────┐
 │                         Frontend                                 │
 │  React 19 + Vite + Tailwind CSS + shadcn/ui                    │
-│  Port: 5173 (development)                                       │
+│  Port: 5173 (development) | Railway (production)               │
 └─────────────────────────────────────────────────────────────────┘
                               │
-                              │ HTTP (proxied via Vite)
+                              │ HTTP API calls
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                         Backend                                  │
 │  Flask + Flask-CORS                                             │
-│  Port: 5000                                                     │
+│  Port: 5000 (local) | Railway (production)                     │
 └─────────────────────────────────────────────────────────────────┘
                               │
               ┌───────────────┼───────────────┐
               ▼               ▼               ▼
         ┌──────────┐    ┌──────────┐    ┌──────────┐
-        │ Claude   │    │ Google   │    │ Local    │
-        │ AI API   │    │ Sheets   │    │ Data     │
-        │ (Vision) │    │ (NEC DB) │    │ Files    │
+        │ Claude   │    │ Google   │    │ Google   │
+        │ AI API   │    │ Calendar │    │ Sheets   │
+        │ (Vision) │    │ API      │    │ (NEC DB) │
         └──────────┘    └──────────┘    └──────────┘
 ```
 
@@ -37,34 +37,104 @@ ElectriciansAssistant/
 ├── src/                              # Frontend source code
 │   ├── components/
 │   │   ├── ui/                       # shadcn/ui components (48 components)
-│   │   ├── DevModeSubmission.jsx     # NEC code submission form
-│   │   └── UpgradePrompt.jsx         # Tier upgrade modal
+│   │   ├── EnhancedCodeCard.jsx      # Enhanced NEC code display
+│   │   ├── EnhancedSearchBar.jsx     # Improved search component
+│   │   ├── EventDetailModal.jsx      # Calendar event details
+│   │   ├── ImprovedHome.jsx          # Redesigned home page
+│   │   ├── QuickAccessBar.jsx        # Quick navigation bar
+│   │   ├── ScheduleSidebar.jsx       # Google Calendar sidebar
+│   │   ├── SkeletonLoader.jsx        # Loading state components
+│   │   └── VoiceDocumentation.jsx    # Voice notes feature
 │   ├── config/
 │   │   └── versions.js               # Tiered product configuration
 │   ├── data/
-│   │   ├── electricalProblems.js     # Electrical problems database
-│   │   └── necCodes.js               # NEC 2023 code references
+│   │   ├── electricalProblems.js     # 30 electrical problems (1264 lines)
+│   │   └── necCodes.js               # 170+ NEC codes (1530 lines)
 │   ├── hooks/
-│   │   └── use-mobile.js             # Mobile breakpoint detection
+│   │   ├── use-mobile.js             # Mobile breakpoint detection
+│   │   └── useGoogleCalendar.js      # Google Calendar hook
+│   ├── services/
+│   │   └── googleCalendarService.js  # Calendar API integration
+│   ├── styles/
+│   │   └── theme.js                  # Theme configuration
 │   ├── lib/
 │   │   └── utils.js                  # Utility functions (cn, clsx)
-│   ├── assets/                       # Static assets
 │   ├── App.jsx                       # Main application component
 │   ├── App.css                       # Tailwind CSS styles
 │   └── main.jsx                      # React entry point
 ├── backend/
-│   ├── src/
-│   │   └── main.py                   # Flask API server
+│   ├── main.py                       # Flask API server
 │   ├── requirements.txt              # Python dependencies
-│   └── .env.example                  # Environment variable template
-├── public/                           # Static public assets
+│   ├── .env.example                  # Environment template
+│   ├── Procfile                      # Railway deployment
+│   └── railway.toml                  # Railway configuration
+├── public/
+│   └── logo.png                      # Application logo
 ├── package.json                      # Node.js dependencies
-├── pnpm-lock.yaml                    # Package lock file
+├── package-lock.json                 # Package lock file
 ├── vite.config.js                    # Vite configuration
-├── jsconfig.json                     # Path alias configuration
-├── components.json                   # shadcn/ui configuration
-└── eslint.config.js                  # ESLint configuration
+├── nixpacks.toml                     # Nixpacks deployment config
+├── railway.json                      # Railway project config
+└── .env.example                      # Frontend environment template
 ```
+
+## Content Database
+
+### Electrical Problems (30 Total)
+
+**Categories by Severity:**
+- Critical: 5 problems (immediate safety hazards)
+- High: 8 problems (significant safety concerns)
+- Medium: 10 problems (code violations, inconveniences)
+- Low: 7 problems (minor issues, upgrades)
+
+**Problems Include:**
+1. Circuit Breaker Keeps Tripping
+2. GFCI Outlet Keeps Tripping
+3. Dead Outlet - No Power
+4. Flickering Lights
+5. Buzzing/Humming from Outlet/Switch
+6. Hot Outlet or Switch Plate
+7. Burning Smell from Outlet/Panel
+8. Sparking Outlet
+9. Two-Prong Outlets (Ungrounded)
+10. Light Switch Not Working
+11. Reversed Polarity
+12. AFCI Breaker Nuisance Tripping
+13. Aluminum Wiring Issues
+14. Overloaded Electrical Panel
+15. Outdated Electrical Panel
+16. Missing GFCI Protection
+17. Improper Wire Splicing
+18. Loose Wire Connections
+19. Missing Junction Box Covers
+20. Insufficient Lighting Outlets
+21. Shared Neutral Circuits
+22. Missing Arc-Fault Protection
+23. Electrical Box Overfill
+24. Improper Grounding
+25. Incorrect Wire Gauge
+26. Backstabbed Outlets
+27. Federal Pacific Panels
+28. Doorbell Not Working
+29. + more...
+
+### NEC 2023 Code Database (170+ Codes)
+
+**Articles Covered:**
+| Article | Title | Codes |
+|---------|-------|-------|
+| 110 | General Requirements | 17 codes |
+| 210 | Branch Circuits | 23 codes |
+| 240 | Overcurrent Protection | 13 codes |
+| 250 | Grounding & Bonding | 19 codes |
+| 310 | Conductors | 13 codes |
+| 314 | Boxes & Enclosures | 12 codes |
+| 334 | NM Cable (Romex) | 10 codes |
+| 404 | Switches | 11 codes |
+| 406 | Receptacles | 15 codes |
+| 408 | Panelboards | 12 codes |
+| 410 | Lighting/Luminaires | 12 codes |
 
 ## Frontend Architecture
 
@@ -76,84 +146,52 @@ ElectriciansAssistant/
 - **Framer Motion 12.15** - Animation library
 - **Lucide React 0.510** - Icon library
 - **React Hook Form 7.56** - Form management
-- **Zod 3.24** - Schema validation
+- **@react-oauth/google** - Google OAuth integration
+- **gapi-script** - Google API client
 
 ### Main Application Views
 
-The app uses a state-based routing system with the following views:
-
 | View | Description |
 |------|-------------|
-| `home` | Landing page with top 3 problems and search |
+| `home` | Landing page with ImprovedHome component |
 | `top3` | Top 3 most common problems |
 | `next10` | Next 10 common problems |
 | `index` | Full problem index with search |
+| `nec-database` | NEC code browser with search |
 | `problem-detail` | Individual problem details with NEC codes |
 | `photo-analysis` | Photo upload and AI analysis interface |
 
-### Component Hierarchy
-
-```
-App.jsx
-├── Header
-│   ├── Version Badge
-│   └── Navigation
-├── Main Content (view-based)
-│   ├── Home View
-│   │   ├── Search Input
-│   │   ├── Top 3 Problems Cards
-│   │   └── Navigation Buttons
-│   ├── Problem Detail View
-│   │   ├── Problem Header
-│   │   ├── Common Causes
-│   │   ├── Troubleshooting Steps
-│   │   ├── NEC Code References
-│   │   └── Photo Instructions
-│   └── Photo Analysis View
-│       ├── Photo Instructions
-│       ├── Upload Area
-│       └── Analysis Results
-├── DevModeSubmission (conditional)
-├── UpgradePrompt Modal (conditional)
-└── Footer
-```
-
 ### Custom Components
 
-#### DevModeSubmission (`src/components/DevModeSubmission.jsx`)
-Form for submitting NEC codes during field testing.
+| Component | Purpose |
+|-----------|---------|
+| `ImprovedHome.jsx` | Redesigned home with quick access |
+| `EnhancedSearchBar.jsx` | Advanced search with filters |
+| `EnhancedCodeCard.jsx` | Rich NEC code display |
+| `QuickAccessBar.jsx` | Quick navigation toolbar |
+| `ScheduleSidebar.jsx` | Google Calendar integration |
+| `EventDetailModal.jsx` | Calendar event popup |
+| `VoiceDocumentation.jsx` | Hands-free voice notes |
+| `SkeletonLoader.jsx` | Loading state placeholders |
 
-**Fields:**
-- Code (required) - e.g., "210.8(A)"
-- Article (required) - e.g., "210"
-- Title (required)
-- Description (required)
-- Category, Application, Safety Notes, Related Codes, Common Violations, Photo Tips (optional)
-
-#### UpgradePrompt (`src/components/UpgradePrompt.jsx`)
-Modal displaying upgrade options for higher tiers.
+### Google Calendar Integration
 
 **Features:**
-- Shows next tier features and pricing
-- Displays annual savings calculations
-- Feature comparison between tiers
+- Real-time schedule sidebar
+- Job type color coding
+- Event details modal
+- Route optimization ready
 
-### Version Configuration (`src/config/versions.js`)
-
-Three-tier product system:
-
-| Tier | Articles | Features | Price |
-|------|----------|----------|-------|
-| Residential | 11 articles | code_lookup, search, photo_analysis, basic_troubleshooting, dev_mode | $29/mo or $199/yr |
-| Commercial | 34 articles | + load_calculations, three_phase_support, commercial_equipment | $79/mo or $599/yr |
-| Enterprise | All NEC | + team_management, analytics_dashboard, custom_reports, api_access, priority_support | Custom |
-
-**Helper Functions:**
-- `getCurrentVersion()` - Returns active tier configuration
-- `hasFeature(featureName)` - Checks feature availability
-- `hasArticle(articleNumber)` - Checks article access
-- `getNextTier(currentTierId)` - Returns next tier for upgrades
-- `calculateAnnualSavings(tier)` - Calculates yearly savings
+**Configuration (`.env.example`):**
+```
+VITE_GOOGLE_CLIENT_ID=your-client-id
+VITE_GOOGLE_API_KEY=your-api-key
+VITE_GOOGLE_MAPS_API_KEY=your-maps-key
+VITE_CALENDAR_EMERGENCY=calendar-id
+VITE_CALENDAR_PANEL=calendar-id
+VITE_CALENDAR_SERVICE=calendar-id
+VITE_CALENDAR_ESTIMATE=calendar-id
+```
 
 ## Backend Architecture
 
@@ -166,7 +204,7 @@ Three-tier product system:
 
 ### Configuration
 
-Environment variables (`.env`):
+Backend environment variables (`backend/.env`):
 ```
 ANTHROPIC_API_KEY=your-key-here
 GOOGLE_SHEETS_BASE_URL=optional-sheets-url
@@ -178,80 +216,26 @@ ENABLE_PHOTO_ANALYSIS=true
 
 ### API Endpoints
 
-#### GET /api/version
-Returns current app version and capabilities.
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/version` | GET | Get current app version and capabilities |
+| `/api/nec-codes` | GET | Fetch all NEC codes (tier-aware) |
+| `/api/nec-codes/search?q=` | GET | Search codes with relevance scoring |
+| `/api/nec-codes/article/{num}` | GET | Get codes for specific article |
+| `/api/analyze` | POST | AI photo analysis with Claude Vision |
+| `/api/dev/submit-code` | POST | Submit NEC codes (dev mode) |
+| `/api/health` | GET | Health check |
 
-**Response:**
+### AI Photo Analysis
+
+The `/api/analyze` endpoint provides context-aware analysis:
+
+**Request:**
 ```json
 {
-  "version": "residential",
-  "tier": "basic",
-  "articles": [110, 210, 240, ...],
-  "articleCount": 11,
-  "devMode": true,
-  "features": { "code_lookup": true, ... },
-  "featureList": ["code_lookup", "search", ...]
-}
-```
-
-#### GET /api/nec-codes
-Fetches NEC codes (tier-aware). Loads from Google Sheets if configured.
-
-**Response:**
-```json
-{
-  "codes": [...],
-  "count": 50,
-  "version": "residential",
-  "tier": "basic",
-  "articlesLoaded": [110, 210, ...],
-  "articlesRequested": [...]
-}
-```
-
-#### GET /api/nec-codes/search?q=query
-Searches NEC codes with weighted relevance scoring.
-
-**Scoring Weights:**
-- code: 10
-- title: 8
-- description: 5
-- application: 5
-- commonViolations: 4
-- category: 3
-- safetyNotes: 3
-
-#### GET /api/nec-codes/article/{article_num}
-Returns codes for a specific NEC article.
-
-#### POST /api/dev/submit-code
-Submits NEC codes during field testing (dev mode only).
-
-**Request Body:**
-```json
-{
-  "code": "210.8(A)",
-  "article": "210",
-  "title": "GFCI Protection",
-  "description": "...",
-  "category": "optional",
-  "application": "optional",
-  "safetyNotes": "optional",
-  "relatedCodes": "optional",
-  "commonViolations": "optional",
-  "photoTips": "optional"
-}
-```
-
-#### POST /api/analyze
-AI-powered photo analysis using Claude Vision.
-
-**Request Body:**
-```json
-{
-  "image": "base64-encoded-image-data",
-  "problem": "optional-problem-title",
-  "context": "optional-context"
+  "image": "base64-encoded-image",
+  "problem": "Circuit Breaker Keeps Tripping",
+  "context": "Problem description for context"
 }
 ```
 
@@ -276,59 +260,36 @@ AI-powered photo analysis using Claude Vision.
 }
 ```
 
-#### GET /api/health
-Health check endpoint returning status and version info.
+## Deployment
 
-## Data Models
+### Railway Configuration
 
-### Electrical Problem
+**Frontend (`railway.json`):**
+- Node.js build with Vite
+- Static file serving
 
-```javascript
-{
-  id: 'unique-id',
-  title: 'Problem Title',
-  description: 'Problem description',
-  category: 'Category name',
-  severity: 'critical|high|medium|low',
-  commonality: 'most-common|common',
-  causes: ['Cause 1', 'Cause 2'],
-  troubleshootingSteps: ['Step 1', 'Step 2'],
-  necReferences: [
-    { code: '210.8(A)', title: 'Title', description: 'Description' }
-  ],
-  photoInstructions: ['Photo instruction 1', 'Photo instruction 2']
-}
-```
+**Backend (`backend/railway.toml`):**
+- Python with Flask
+- Procfile for startup
 
-### NEC Code Entry
+### Environment Setup
 
-```javascript
-{
-  code: '210.8(A)',
-  article: '210',
-  title: 'GFCI Protection for Personnel',
-  category: 'Branch Circuits',
-  description: 'Full code text',
-  application: 'Usage context',
-  safetyNotes: 'Safety considerations',
-  relatedCodes: ['210.8(B)', '406.4(D)'],
-  commonViolations: 'Common mistakes',
-  photoTips: 'Documentation guidance'
-}
-```
+1. Set `ANTHROPIC_API_KEY` in Railway backend
+2. Configure Google OAuth credentials
+3. Set calendar IDs if using calendar integration
 
 ## Development Setup
 
 ### Prerequisites
 - Node.js 18+
 - Python 3.8+
-- pnpm (recommended) or npm
+- npm or pnpm
 
 ### Installation
 
 ```bash
 # Install frontend dependencies
-pnpm install
+npm install
 
 # Install backend dependencies
 cd backend
@@ -340,49 +301,42 @@ pip install -r requirements.txt
 ```bash
 # Terminal 1: Backend
 cd backend
-python src/main.py
+python main.py
 
 # Terminal 2: Frontend
-pnpm run dev
+npm run dev
 ```
 
 ### Build for Production
 
 ```bash
-pnpm run build
+npm run build
 ```
 
-Built files output to `dist/` directory.
+## Version/Tier System
+
+| Tier | Articles | Features | Price |
+|------|----------|----------|-------|
+| Residential | 11 articles | code_lookup, search, photo_analysis, basic_troubleshooting | $29/mo or $199/yr |
+| Commercial | 34 articles | + load_calculations, three_phase_support, commercial_equipment | $79/mo or $599/yr |
+| Enterprise | All NEC | + team_management, analytics_dashboard, custom_reports, api_access | Custom |
 
 ## Security Considerations
 
 - API keys stored in environment variables (not committed)
 - `.gitignore` configured to exclude `.env` files
 - All image analysis performed server-side
-- CORS configured for development
-- No authentication system yet (planned for future phases)
-
-## Future Phases
-
-### Phase 2: Commercial Wizard
-- Google Sheets integration for NEC database
-- Load calculation tools
-- Three-phase system support
-- Commercial equipment references
-
-### Phase 3: Enterprise Wizard
-- Team management
-- Analytics dashboard
-- Custom reports
-- API access for integrations
-- Priority support
+- CORS configured for development and production
+- Google OAuth for calendar authentication
 
 ## File Reference
 
 | File | Lines | Purpose |
 |------|-------|---------|
-| `backend/src/main.py` | 481 | Flask API server |
-| `src/App.jsx` | 765 | Main React application |
-| `src/config/versions.js` | 197 | Tier configuration |
-| `src/data/electricalProblems.js` | 474 | Problems database |
-| `src/data/necCodes.js` | 643 | NEC code references |
+| `backend/main.py` | ~500 | Flask API server |
+| `src/App.jsx` | ~730 | Main React application |
+| `src/config/versions.js` | ~200 | Tier configuration |
+| `src/data/electricalProblems.js` | 1264 | 30 problems database |
+| `src/data/necCodes.js` | 1530 | 170+ NEC codes |
+| `src/components/VoiceDocumentation.jsx` | 425 | Voice notes feature |
+| `src/services/googleCalendarService.js` | 335 | Calendar API |

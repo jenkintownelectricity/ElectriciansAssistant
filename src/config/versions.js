@@ -29,8 +29,7 @@ export const APP_VERSIONS = {
       'search',
       'photo_analysis',
       'basic_troubleshooting',
-      'dev_mode'
-    ],
+         ],
     limits: {
       photoAnalysisPerMonth: 100,
       savedSearches: 50,
@@ -62,8 +61,7 @@ export const APP_VERSIONS = {
       'load_calculations',
       'three_phase_support',
       'commercial_equipment',
-      'dev_mode'
-    ],
+          ],
     limits: {
       photoAnalysisPerMonth: 500,
       savedSearches: 200,
@@ -94,7 +92,6 @@ export const APP_VERSIONS = {
       'custom_reports',
       'api_access',
       'priority_support',
-      'dev_mode'
     ],
     limits: {
       photoAnalysisPerMonth: 'unlimited',
