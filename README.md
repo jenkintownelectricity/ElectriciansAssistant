@@ -119,25 +119,41 @@ See [`PHASE1_IMPLEMENTATION.md`](PHASE1_IMPLEMENTATION.md) for complete technica
 ## 🏗️ Project Structure
 
 ```
-electrician-assistant/
+ElectriciansAssistant/
 ├── backend/
 │   ├── src/
-│   │   └── main.py          # Flask API server
-│   ├── .env                 # Environment variables (not in git)
-│   └── requirements.txt     # Python dependencies
+│   │   └── main.py              # Flask API server (481 lines)
+│   ├── .env                     # Environment variables (not in git)
+│   ├── .env.example             # Environment template
+│   └── requirements.txt         # Python dependencies
 ├── src/
-│   ├── components/ui/       # shadcn/ui components
+│   ├── components/
+│   │   ├── ui/                  # shadcn/ui components (48 components)
+│   │   ├── DevModeSubmission.jsx # NEC code submission form
+│   │   └── UpgradePrompt.jsx    # Tier upgrade modal
+│   ├── config/
+│   │   └── versions.js          # Tiered product configuration
 │   ├── data/
-│   │   ├── electricalProblems.js  # Problem database
-│   │   └── necCodes.js           # NEC 2023 code database
-│   ├── App.jsx             # Main application component
-│   └── main.jsx            # Entry point
-├── public/                  # Static assets
-├── .gitignore
-├── package.json
-├── vite.config.js
-└── README.md
+│   │   ├── electricalProblems.js # Problem database (13+ problems)
+│   │   └── necCodes.js          # NEC 2023 code database
+│   ├── hooks/
+│   │   └── use-mobile.js        # Mobile breakpoint detection
+│   ├── lib/
+│   │   └── utils.js             # Utility functions
+│   ├── App.jsx                  # Main application component
+│   ├── App.css                  # Tailwind CSS styles
+│   └── main.jsx                 # React entry point
+├── public/                      # Static assets
+├── package.json                 # Node.js dependencies
+├── pnpm-lock.yaml              # Package lock file (pnpm)
+├── vite.config.js              # Vite build configuration
+├── ARCHITECTURE.md             # Detailed architecture documentation
+├── PHASE1_IMPLEMENTATION.md    # Phase 1 technical specifications
+├── GOOGLE_SHEETS_SETUP.md      # Google Sheets integration guide
+└── README.md                   # This file
 ```
+
+> **See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed technical documentation including API endpoints, data models, and component architecture.**
 
 ## 🛠️ Tech Stack
 
@@ -230,16 +246,43 @@ We're working on Google Sheets integration to make it easier to manage the NEC c
 12. AFCI Breaker Nuisance Tripping
 13. Aluminum Wiring Issues
 
+## 🔌 API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/version` | GET | Get current app version and capabilities |
+| `/api/nec-codes` | GET | Fetch all NEC codes (tier-aware) |
+| `/api/nec-codes/search?q=` | GET | Search codes with relevance scoring |
+| `/api/nec-codes/article/{num}` | GET | Get codes for specific article |
+| `/api/analyze` | POST | AI photo analysis with Claude Vision |
+| `/api/dev/submit-code` | POST | Submit NEC codes (dev mode) |
+| `/api/health` | GET | Health check |
+
+> **See [ARCHITECTURE.md](ARCHITECTURE.md) for complete API documentation with request/response examples.**
+
 ## 🎯 Roadmap
 
-- [ ] Google Sheets integration for NEC code database
-- [ ] Export analysis reports to PDF
-- [ ] Save analysis history
-- [ ] Multi-language support
-- [ ] Mobile app version
-- [ ] Offline mode for field use
-- [ ] Voice input for hands-free operation
-- [ ] Integration with inspection checklists
+### Phase 1 (Current) - Residential Wizard
+- [x] Tiered product system architecture
+- [x] AI-powered photo analysis with Claude 3.5 Sonnet
+- [x] NEC 2023 code database (11 residential articles)
+- [x] 13+ common electrical problems with troubleshooting
+- [x] Dev mode for field testing code submissions
+- [ ] Google Sheets integration for NEC database
+- [ ] Payment integration
+
+### Phase 2 - Commercial Wizard
+- [ ] Load calculation tools
+- [ ] Three-phase system support
+- [ ] Commercial equipment references
+- [ ] Expanded NEC coverage (34 articles)
+
+### Phase 3 - Enterprise Wizard
+- [ ] Team management
+- [ ] Analytics dashboard
+- [ ] Custom reports and PDF export
+- [ ] API access for integrations
+- [ ] Priority support
 
 ## 📄 License
 
